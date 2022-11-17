@@ -96,6 +96,13 @@ class Calendar extends PureComponent {
     this.list.scrollTo(targetMonthIndex);
     this.setState({ focusedDate: date });
   };
+
+  setFocusedDate = date => {
+    const targetMonthIndex = differenceInCalendarMonths(date, this.props.minDate, this.dateOptions);
+    this.list.scrollTo(targetMonthIndex);
+    this.setState({ focusedDate: date });
+  };
+
   updateShownDate = (props = this.props) => {
     const newProps = props.scroll.enabled
       ? {
@@ -122,6 +129,9 @@ class Calendar extends PureComponent {
     if (this.props.scroll.enabled) {
       // prevent react-list's initial render focus problem
       setTimeout(() => this.focusToDate(this.state.focusedDate));
+    }
+    if (this.props.setFocusCallback) {
+      this.props.setFocusCallback(this.setFocusedDate);
     }
   }
 
@@ -493,7 +503,7 @@ class Calendar extends PureComponent {
               isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal
             )}>
             {new Array(this.props.months).fill(null).map((_, i) => {
-              let monthStep = addMonths(this.state.focusedDate, i);;
+              let monthStep = addMonths(this.state.focusedDate, i);
               if (this.props.calendarFocus === 'backwards') {
                 monthStep = subMonths(this.state.focusedDate, this.props.months - 1 - i);
               }
