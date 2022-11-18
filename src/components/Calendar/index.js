@@ -141,7 +141,7 @@ class Calendar extends PureComponent {
       date: 'date',
     };
     const targetProp = propMapper[this.props.displayMode];
-    if (this.props[targetProp] !== prevProps[targetProp]) {
+    if (this.props[targetProp] !== prevProps[targetProp] && !this.props.preventFocusOnDateChange) {
       this.updateShownDate(this.props);
     }
 
@@ -593,6 +593,8 @@ Calendar.propTypes = {
     color: PropTypes.string,
   }),
   dateDisplayFormat: PropTypes.string,
+  preventFocusOnDateChange: PropTypes.bool,
+  setFocusCallback: PropTypes.func,
   monthDisplayFormat: PropTypes.string,
   weekdayDisplayFormat: PropTypes.string,
   weekStartsOn: PropTypes.number,
