@@ -1,5 +1,43 @@
 This component wraps **[DefinedRange](#definedrange)** and **[Calendar](#calendar)** components together, and extends all the props of them.
 
+#### Example: Vertical Infinite FIXED scroll
+
+```jsx inside Markdown
+import { addDays, format } from 'date-fns';
+import { useState } from 'react';
+
+const [state, setState] = useState({
+  selection: {
+    startDate: new Date(),
+    endDate: null,
+    key: 'selection'
+  },
+  compare: {
+    startDate: new Date(),
+    endDate: addDays(new Date(), 3),
+    key: 'compare'
+  }
+});
+<div>
+  <DateRangePicker
+    onChange={item => setState({ ...state, ...item })}
+    months={1}
+    minDate={addDays(new Date(), -600)}
+    maxDate={addDays(new Date(), 900)}
+    direction="vertical"
+    scroll={{ enabled: true }}
+    ranges={[state.selection]}
+    preventFocusOnDateChange={true}
+    showDateDisplay={false}
+    showMonthAndYearPickers={false}
+    showMonthArrow={false}
+    staticRanges={undefined}
+  />
+  <pre>{JSON.stringify(state, null, 2)}</pre>
+</div>;
+```
+
+
 #### Example: 2 Month View
 
 ```jsx inside Markdown
